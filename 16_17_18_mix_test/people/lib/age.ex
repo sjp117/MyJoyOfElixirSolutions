@@ -4,8 +4,8 @@ defmodule People.Age do
   def init(options), do: options
 
   defp get_age(birthday) do
-    birthday = Date.from_iso8601(birthday) |> elem(1)
-    days = Date.diff(Date.utc_today(), birthday)
+    birthdate = Date.from_iso8601(birthday) |> elem(1)
+    days = Date.diff(Date.utc_today(), birthdate)
     (days / 365.25) |> trunc()
   end
 

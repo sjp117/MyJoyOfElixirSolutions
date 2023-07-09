@@ -4,10 +4,43 @@ defmodule People.Person do
             birthday: nil,
             location: "home"
 
-  def full_name(%__MODULE__{} = person) do
-    "#{person.first_name} #{person.last_name}"
+  @doc """
+  Join together a person's first name and last name.
+  If that person only as a first name, then only the first name will be the full name.
+
+  ## Examples
+
+  iex> ryan = %Person{first_name: "Ryan", last_name: "Bigg"}
+  iex> ryan |> Person.full_name
+  "Ryan Bigg"
+
+  iex> madonna = %Person{first_name: "Madonna"}
+  iex> madonna |> Person.full_name
+  "Madonna"
+  """
+  def full_name(%__MODULE__{
+        first_name: first_name,
+        last_name: nil
+      }) do
+    "#{first_name}"
   end
 
+  def full_name(%__MODULE__{
+        first_name: first_name,
+        last_name: last_name
+      }) do
+    "#{first_name} #{last_name}"
+  end
+
+  @doc """
+  Takes in person's birthday and returns their age.
+  This doctest is only valid on the day it was written: ~D[2023-07-09]
+  ## Examples
+
+  iex> person = %Person{birthday: ~D[1987-12-04]}
+  iex> person |> Person.age
+  35.59479808350445
+  """
   def age(%__MODULE__{} = person) do
     days = Date.diff(Date.utc_today(), person.birthday)
     days / 365.25
